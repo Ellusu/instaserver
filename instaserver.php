@@ -11,14 +11,15 @@
     $insta_json = explode(';</script>', $shards[1]); 
     $insta_array = json_decode($insta_json[0], TRUE);
     
-    $insta_array = $insta_array['entry_data']['TagPage'][0]['tag']['media']['nodes'];
+    $insta_array = $insta_array['entry_data']['TagPage'][0]["graphql"]["hashtag"]["edge_hashtag_to_media"]["edges"];
     $i = 1;
     foreach ($insta_array as $k => $insta) {
         if($i>$limit) continue;
         $array[] = array(
-            'id'            =>  $insta['id'],
-            'code'          =>  $insta['code'],
-            'thumbnail_src' =>  $insta['thumbnail_src']
+            'id'            =>  $insta["node"]['id'],
+            'code'          =>  $insta["node"]['code'],
+            'thumbnail_src' =>  $insta["node"]['thumbnail_src'],
+            'or'            =>  $insta["node"]
         );
         $i++;
     }
